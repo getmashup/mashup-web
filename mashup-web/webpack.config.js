@@ -17,7 +17,8 @@ var config = {
     resolve: {
         alias: {
             react: node_dir + '/react/dist/react.js',
-            jquery: lib_dir + '/jquery-1.11.2.min.js',  
+            jquery: lib_dir + '/jquery-1.11.2.min.js', 
+            bootstrap: lib_dir + '/bootstrap.js', 
             underscore: node_dir + '/underscore/underscore.js',
         }
     },   
@@ -33,7 +34,7 @@ var config = {
 
     entry: {
         app: ['./public/js/app-main'],
-        vendors: ['react','jquery','underscore']
+        vendors: ['react','jquery','bootstrap','underscore']
     },
 
     output: {
