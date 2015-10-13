@@ -37,10 +37,10 @@ storesInfo [
         ratings: 4/5,
         location: {
             "type" : "Point",
-            "address" : "Eshwara Layout, Indiranagar, Bengaluru, Karnataka 560038, India",
+            "address" : "298, 100th Feet Rd, Binnamangala, Hoysala Nagar, Indiranagar, Bengaluru, Karnataka 560038, India",
             "coordinates" : [
-                77.634955,
-                12.975955
+                77.64059099999997,
+                12.979234
             ]
         },
         storeItems: [
@@ -67,7 +67,24 @@ storesInfo [
         ]
     },
     {
-
+        location: {
+            "type" : "Point",
+            "address" : "21, Hosur Rd, Chikku Lakshmaiah Layout, Adugodi, Bengaluru, Karnataka 560029, India",
+            "coordinates" : [
+                77.61206400000003,
+                12.934689
+            ]
+        },
+    },
+    {
+        location: {
+            "type" : "Point",
+            "address" : "16, D Bhaskaran Rd, Murphy Town, Ulsoor, Bengaluru, Karnataka 560008, India",
+            "coordinates" : [
+                77.62855850000005,
+                12.9817147
+            ]
+        },
     }
 ]
 
@@ -103,9 +120,44 @@ mashupsInfo [
 
 ------------------------------------------------------------
 
-This will find stores containing the mentioned items:-
+Queries:-
+
+    Creates index for searching text:
 
 db.storesInfo.createIndex({"storeItems.item": "text"})
+
+    Creates index for geoSpatial querying:
+
+db.storesInfo.createIndex({"location":"2dsphere"})
+
+    Queries for stores that have salt and paneer:
+
 db.storesInfo.find({$text: {$search: "salt paneer"}}).pretty()
+
+    Queries for stores that are within 5 kilometre range of the mentioned Co-ordinates:
+
+db.storesInfo.find({
+    location:{
+        $near:{
+            $geometry:{type:"Point", coordinates:[77.64059099999997, 12.979234]}, 
+            $maxDistance: 5000
+        }
+    }
+}).pretty()
+
+    Queries the above two queries. 5/6371 is to convert 5 kilometres into radians where 6371 is the radius of the earth
+
+db.storesInfo.find({
+    $and:[
+        {
+            $text: {$search: "salt paneer"}
+        },
+        {
+            "location.coordinates":{
+                $geoWithin:{$centerSphere:[[77.64059099999997, 12.979234], 5/6371]}
+            }
+        }
+    ]
+}).pretty()
 
 ------------------------------------------------------------
