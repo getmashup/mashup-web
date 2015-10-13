@@ -13,10 +13,22 @@ webpackJsonp([1],[
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1),__webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React,HomePage){	
-		console.log('Loaded the Home Page');
-		React.render(React.createElement(HomePage, null), document.getElementById('componentContainer'));
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(1),
+			__webpack_require__(6),
+			__webpack_require__(7)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, LoginPage, HomePage){	
+			console.log('Loaded the Home Page');
+			var body = document.body,
+				userName = body.getAttribute('data-user-name');
+
+			if(userName === null){
+				React.render(React.createElement(LoginPage, null), document.getElementById('componentContainer'));
+			}else{
+				React.render(React.createElement(HomePage, null), document.getElementById('componentContainer'));
+			} 
+			
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 	//webpack --progress --colors --watch (for development)
 	//webpack -p (for production)
@@ -27,7 +39,151 @@ webpackJsonp([1],[
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 			__webpack_require__(1),
-			__webpack_require__(7)
+			__webpack_require__(2)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React,$){
+			var LoginPage = React.createClass({displayName: "LoginPage",
+				signup:{
+					usernameStatus:'false'
+				},
+				verifyLogin:function(){
+					console.log('Login clicked');
+					var userName = document.getElementById('loginNameInput').value,
+						password = document.getElementById('loginPwInput').value,
+						postData = {
+							userName: userName,
+							password: password 
+						};
+					//this code needs to be changed as the authentication technique is not secure.
+					$.ajax({
+					    type: 'POST',
+					    url: '/login',
+					    data: postData,
+					    datatype:'json',
+					    success: function(data){
+					    	if(data.status === 'loggedIn'){
+					    		window.location.replace('/');
+					    	}else if(data.status === 'authentication failure'){
+					    		document.getElementById('loginErrMsg').innerHTML = "Looks like you entered wrong credentials. Please try again"
+					    	}               
+					    }.bind(this),
+					    error: function(httpRequest,status,error){
+					    	console.log('/');
+					    	//window.location.replace('/');
+					    }
+					});
+				},
+				checkForUsername:function(){
+					var userName = document.getElementById('signupNameInput');
+					if(userName.value !== ''){
+						var postData = {
+							userName: userName.value
+						};
+						$.ajax({
+						    type: 'POST',
+						    url: '/signup/username/verify',
+						    data: postData,
+						    datatype: 'json',
+						    success: function(data){
+						  		if(data.status === 'unavailable'){
+						  			document.getElementById('signupNameMsg').innerHTML = 'Username not available';
+						  			this.signup.usernameStatus = 'false';
+
+						  		}else if(data.status === 'available'){
+						  			document.getElementById('signupNameMsg').innerHTML = 'Username available';
+						  			this.signup.usernameStatus = 'ok';
+						  		}
+						    }.bind(this),
+						    error: function(httpRequest,status,error){
+						    	window.location.replace('/');
+						    }
+						});
+					}else{
+						this.signup.usernameStatus = 'false';
+					}
+				},
+				signup:function(){
+					var userName = document.getElementById('signupNameInput').value,
+						pwOne = document.getElementById('signupPwInputOne').value,
+						pwTwo = document.getElementById('signupPwInputTwo').value,
+						that = this;
+					if(pwOne !== pwTwo){
+						document.getElementById('signupPwMsg').innerHTML = 'Passwords do not match';
+					}else if(that.signup.usernameStatus === 'ok' && pwOne !== ''){
+						var postData = {
+							userName: userName,
+							password: pwOne 
+						};
+						$.ajax({
+						    type: 'POST',
+						    url: '/signup',
+						    data: postData,
+						    datatype: 'json',
+						    success: function(data){
+						    	window.location.replace('/');             
+						    }.bind(this),
+						    error: function(httpRequest,status,error){
+						    	window.location.replace('/');
+						    }
+						});
+					}else{
+						console.log('username exists');
+					}
+				},
+			  	render:function(){
+			  		var that = this;
+				    return (
+				    	React.createElement("div", {id: "homePage"}, 
+				    		"welcome to Mashup!", 
+				    		
+				    		React.createElement("div", {id: "main", className: "section group"}, 
+				    			React.createElement("div", {id: "contentWrapper", className: "section group"}, 
+						     		React.createElement("div", {id: "loginSection", className: "column loginSection"}, 
+						     			React.createElement("h5", null, "Existing user?"), 
+						     			React.createElement("h3", {id: "loginHeader"}, "Login"), 
+							    		React.createElement("p", {className: "inputClassOne"}, 
+							     			React.createElement("input", {type: "text", id: "loginNameInput", placeholder: "User-name"})
+							     		), 
+							     		React.createElement("p", {className: "inputClassOne"}, 
+							     			React.createElement("input", {type: "password", id: "loginPwInput", placeholder: "Password"})
+							     		), 
+							     		React.createElement("div", {onClick: that.verifyLogin, className: "buttonClassOne", id: "loginButton"}, "Login"), 		
+							     		React.createElement("div", {id: "loginErrMsg"})
+							     	), 
+
+						     		React.createElement("div", {id: "signupSection", className: "column signupSection"}, 
+						     			React.createElement("h5", null, "Are you a new user?"), 
+						     			React.createElement("h3", {id: "signupHeader"}, "Sign Up!"), 
+						     			React.createElement("p", {className: "inputClassOne"}, 
+						     				React.createElement("input", {type: "text", id: "signupNameInput", placeholder: "Choose a username", onBlur: that.checkForUsername}), 
+						     				React.createElement("div", {id: "signupNameMsg"})
+						     			), 
+						     			React.createElement("p", {className: "inputClassOne"}, 
+						     				React.createElement("input", {type: "password", id: "signupPwInputOne", placeholder: "Choose a password"}), 
+						     				React.createElement("br", null), React.createElement("br", null), 
+						     				React.createElement("input", {type: "password", id: "signupPwInputTwo", placeholder: "Re-enter your password"}), 
+						   					React.createElement("div", {id: "signupPwMsg"})
+						     			), 
+						     			React.createElement("div", {onClick: that.signup, className: "buttonClassOne", id: "signupButton"}, "Sign Up!")	
+						     		)
+						     	), 
+					     		React.createElement("div", {id: "bgImg"}), 
+					     		React.createElement("div", {className: "overlay"})
+					     	)	
+		 		    	)
+				    );
+			  	}
+			});
+			return LoginPage;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(1),
+			__webpack_require__(8)
 		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, HeaderBar){
 			var HomePage = React.createClass({displayName: "HomePage",
 				getInitialState: function(){
@@ -54,7 +210,7 @@ webpackJsonp([1],[
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React){

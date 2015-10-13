@@ -10,7 +10,7 @@ define(
 		var redisClient = configRedis.redisClient(),
 			mongoDBClient = configMongo.mongoClientDB(),
 			that = this,
-			debug = require('debug')('mashup:account-db');
+			debug = require('debug')('mashup:auth-db-api');
 
 		var bcrypt = require('bcrypt');		
 

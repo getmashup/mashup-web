@@ -1,7 +1,22 @@
-define(['react','./components/home-page'],function(React,HomePage){	
-	console.log('Loaded the Home Page');
-	React.render(<HomePage />, document.getElementById('componentContainer'));
-});
+define(
+	[
+		'react',
+		'./components/login-page',
+		'./components/home-page'
+	],
+	function(React, LoginPage, HomePage){	
+		console.log('Loaded the Home Page');
+		var body = document.body,
+			userName = body.getAttribute('data-user-name');
+
+		if(userName === null){
+			React.render(<LoginPage />, document.getElementById('componentContainer'));
+		}else{
+			React.render(<HomePage />, document.getElementById('componentContainer'));
+		} 
+		
+	}
+);
 
 //webpack --progress --colors --watch (for development)
 //webpack -p (for production)

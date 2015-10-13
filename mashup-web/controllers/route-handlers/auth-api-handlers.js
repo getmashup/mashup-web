@@ -6,9 +6,9 @@ define(
         'async',
         'bcrypt',
         'crypto',
-        '../../database/account-db',
+        '../../database/auth-db-api',
     ], 
-    function (async, bcrypt, crypto, accountDb) {
+    function (async, bcrypt, crypto, authDbApi) {
         var bcrypt = require('bcrypt'),
             SALT_WORK_FACTOR = 10,
             debug = require('debug')('mashup:auth-api-handlers');
@@ -36,7 +36,7 @@ define(
              
                     // override the cleartext password with the hashed one
                     reqObj.password = hash;
-                    accountDb.registerNewUser(reqObj, responseCallback);
+                    authDbApi.registerNewUser(reqObj, responseCallback);
                 });
             });
 
@@ -53,7 +53,7 @@ define(
             async.series(
                 {
                     one: function (callback) {
-                        accountDb.checkForUser(reqObj, callback);
+                        authDbApi.checkForUser(reqObj, callback);
                     }
                 },
                 function(err, results){
@@ -111,7 +111,7 @@ define(
             var reqObj = {};
             reqObj.userName = req.body.userName;
             
-            accountDb.checkForUser(reqObj, responseCallback);
+            authDbApi.checkForUser(reqObj, responseCallback);
         }
 
         homeRender = function(req, url, responseCallback){
