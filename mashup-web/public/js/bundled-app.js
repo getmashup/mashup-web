@@ -133,7 +133,7 @@ webpackJsonp([1],[
 			  		var that = this;
 				    return (
 				    	React.createElement("div", {id: "homePage"}, 
-				    		"welcome to Mashup!", 
+				    		React.createElement("h2", {id: "mainHeader"}, "Welcome to Mashup"), 
 				    		
 				    		React.createElement("div", {id: "main", className: "section group"}, 
 				    			React.createElement("div", {id: "contentWrapper", className: "section group"}, 
@@ -153,6 +153,9 @@ webpackJsonp([1],[
 						     		React.createElement("div", {id: "signupSection", className: "column signupSection"}, 
 						     			React.createElement("h5", null, "Are you a new user?"), 
 						     			React.createElement("h3", {id: "signupHeader"}, "Sign Up!"), 
+						     			React.createElement("p", {className: "inputClassOne"}, 
+						     				React.createElement("input", {type: "text", id: "signupDisplayNameInput", placeholder: "Your full name"})
+						     			), 
 						     			React.createElement("p", {className: "inputClassOne"}, 
 						     				React.createElement("input", {type: "text", id: "signupNameInput", placeholder: "Choose a username", onBlur: that.checkForUsername}), 
 						     				React.createElement("div", {id: "signupNameMsg"})

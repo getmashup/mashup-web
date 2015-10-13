@@ -53,7 +53,7 @@ h1,h2,h3,h4,h5 {
 	color: rgb(231,95,93);
 	background-color: rgba(255,255,255,0.2);
   	width: 100px;
-	height: 25px;
+	height: 35px;
 	border-radius: 4px;
 	padding-top:5px;
 	border-style: solid;
@@ -75,6 +75,7 @@ h1,h2,h3,h4,h5 {
 
 /*Apply class inputClassOne to apply this  style for input boxes*/
 .inputClassOne input[type="text"], input[type="password"]{
+	color: black;
 	padding: 10px;
 	margin: 0.5em 0;
 	border: solid 1px #dcdcdc;

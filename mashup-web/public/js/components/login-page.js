@@ -96,7 +96,7 @@ define(
 		  		var that = this;
 			    return (
 			    	<div id="homePage">
-			    		welcome to Mashup!
+			    		<h2 id="mainHeader">Welcome to Mashup</h2>
 			    		
 			    		<div id="main" className="section group">
 			    			<div id="contentWrapper" className="section group">
@@ -116,6 +116,9 @@ define(
 					     		<div id="signupSection" className="column signupSection">
 					     			<h5>Are you a new user?</h5>
 					     			<h3 id="signupHeader">Sign Up!</h3>
+					     			<p className="inputClassOne" >
+					     				<input type="text" id="signupDisplayNameInput" placeholder="Your full name"/>
+					     			</p>
 					     			<p className="inputClassOne" >
 					     				<input type="text" id="signupNameInput" placeholder="Choose a username" onBlur={that.checkForUsername} />
 					     				<div id="signupNameMsg"></div>
