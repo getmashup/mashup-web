@@ -9,9 +9,9 @@ define(
         var MongoClient, mongoDB, that = this;
 
         function configure(callback) {
-            that.MongoClient = mongodb.MongoClient,
-                Server = mongodb.Server;
-            var server = 'mongodb://localhost:27017/test';
+            that.MongoClient = mongodb.MongoClient;
+            
+            var server = 'mongodb://localhost:27017/mashupDB';
 
             that.MongoClient.connect(server, function(err, db){
                 if(err){
