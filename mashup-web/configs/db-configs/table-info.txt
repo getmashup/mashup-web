@@ -1,74 +1,111 @@
-keyspace 
-	mashup_db
-  CREATE KEYSPACE mashup_db WITH replication = {   'class':'SimpleStrategy', 'replication_factor' : 1 };
+MongoDB is used here as the primary database. Refer http://docs.mongodb.org/master/reference/mongo-shell/
 
-********************Column families********************************
+------------------------------------------------------------
 
+Collections used:-
 
-CREATE TABLE user_profiles (
-    user_name text,
-    android_devices list<text>,
-    cover_pictures list<text>,
-    cover_type text,
-    cover_videos list<text>,
-    cover_youtube_videos list<text>,
-    display_name text,
-    display_pictures list<text>,
-    email_status text,
-    emails set<text>,
-    facebook_data text,
-    gender text,
-    hierarchical_names list<text>,
-    hierarchy_urls list<text>,
-    last_login_date timestamp,
-    password text,
-    phone_numbers set<text>,
-    phone_status text,
-    place_id text,
-    posts int,
-    profile_creation_date timestamp,
-    subscribers int,
-    traction_factor int,
-    trust_factor int,
-    user_privilege text,
-    views int,
-    PRIMARY KEY ((user_name))
-)
+Collection for storing user-info
+usersInfo [
+    {
+        userId: 'ashwin01',
+        displayName: 'Ashwin Hariharan',
+        phone: '855',
+        email: 'ashwin@ashwin.com',
+        password: '$2a$10$hc1/TnhpidxgJ',
+        location: {
+            "type" : "Point",
+            "address" : "Eshwara Layout, Indiranagar, Bengaluru, Karnataka 560038, India",
+            "coordinates" : [
+                77.634955,
+                12.975955
+            ]
+        }
+    },
+    {
 
+    }
+]
 
-CREATE TABLE location_posts (
-    location_url text,
-    post_category text,
-    post_date bigint,
-    post_id timeuuid,
-    audio_url text,
-    channel_names list<text>,
-    channel_types list<text>,
-    channel_urls list<text>,
-    display_name text,
-    display_picture text,
-    downvotes int,
-    hierarchical_names list<text>,
-    hierarchy_urls list<text>,
-    link_url text,
-    no_of_comments int,
-    picture_url text,
-    post_content text,
-    user_name text,
-    upvotes int,
-    video_url text,
-    youtube_url text,
-    PRIMARY KEY ((location_url, post_category), post_date, post_id)
-) 
-WITH CLUSTERING ORDER BY (post_date DESC, post_id DESC);
+Collection for storing information about stores
 
+storesInfo [
+    {
+        storeId: 'wallmart01',
+        storeName: 'Wallmart Indiranagar Branch',
+        phone: '1234',
+        password: '$%^&#afsdf',
+        ratings: 4/5,
+        location: {
+            "type" : "Point",
+            "address" : "Eshwara Layout, Indiranagar, Bengaluru, Karnataka 560038, India",
+            "coordinates" : [
+                77.634955,
+                12.975955
+            ]
+        },
+        storeItems: [
+            {
+                item: 'salt',
+                quantity: '1kg',
+                price: 'Rs.20'
+            },
+            {
+                item: 'paneer',
+                quantity: '500 grams',
+                price: 'Rs.100'
+            },
+            {
+                item: 'tomatoes',
+                quantity: '1 kg',
+                price: 'Rs.20'
+            },
+            {
+                item: 'garam masala',
+                quantity: '200 grams',
+                price: 'Rs.30'
+            }
+        ]
+    },
+    {
 
+    }
+]
 
--------------------------------
-COPY PASTE FOR CONVENIENCE
+Collection for storing mashups (receipes/ingredients) info
 
-DROP TABLE user_profiles;
+mashupsInfo [
+    {
+        mashupName: 'Fried Masala Omlette',
+        createdBy: 'Recommended',
+        ratings: 4/5,
+        receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+        receipeItems: [
+            {
+                item: 'eggs',
+                quantity: '2'
+            },
+            {
+                item: 'garam masala',
+                quantity: '200 grams'
+            },
+            {
+                item: 'tomatoes',
+                quantity: '500 grams'
+            },
+            {
+                item: 'salt',
+                quantity: '500 grams'
+            },
 
-___________________________________________
+        ]
+    }
+]
 
-ALTER TABLE user_profiles ADD picture_url text;
+------------------------------------------------------------
+
+This will find stores containing the mentioned items:-
+
+db.storesInfo.createIndex({"storeItems.item": "text"})
+db.storesInfo.find({$text: {$search: "salt paneer"}}).pretty()
+
+------------------------------------------------------------
