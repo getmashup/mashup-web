@@ -11,15 +11,12 @@ requirejs(
 	[
 		'exports',
 		'async',
-		'configs/db-configs/config-mongodb'
+		'configs/db-configs/config-mongodb',
 	],
 	function(exports, async, configMongodb){
 		var that = this;
 
 		var insertStoreData = function(){
-
-			var ObjectID = require('mongodb').ObjectID;
-			var mongoDBClient = configMongodb.mongoClientDB();
 
 			var storesInfo = [
 				{
@@ -229,43 +226,33 @@ requirejs(
 
 			var functionArray = [];
 
-			function makeFunctionList(storeDetails, iterator){
-			    return function(callback){
-			        mongoDBClient.collection("storesInfo").ensureIndex( { "location" : "2dsphere" }, function(){
-
-			        	mongoDBClient.collection("storesInfo").ensureIndex( { "storeItems.item" : "text" }, function(){
-
-			        		mongoDBClient.collection("storesInfo").insert(storeDetails, function(err, results){
-			        			if(err){
-			        				resultData = {
-			        					error: err,
-			        					message: 'Execute failed in insert'
-			        				};
-			        				callback(resultData);
-			        			}else{
-			        				resultData = 'Inserted storeDetails'+ iterator;
-			        				callback(null, resultData);
-			        			}
-			        		});
-			        	})
-			        })
-			    }
-			}
-
-			for(var i=0; i<storesInfo.length; i++){
-				functionArray.push(makeFunctionList(storesInfo[i], i));
-			}
-			async.parallel(
-				functionArray,
-				function(err, results) {
-				    if(err){
-				        debug(err);
-				    }else{
-				    	console.log('Sample store details inserted');
-				    	process.exit();
+			requirejs(['database/stores-db-api'],function(storesDbApi){
+				function makeFunctionList(storeDetails){
+				    return function(callback){
+				        storesDbApi.insertSampleStoresData(storeDetails, callback);
 				    }
 				}
-			)
+
+				for(var i=0; i<storesInfo.length; i++){
+					functionArray.push(makeFunctionList(storesInfo[i]));
+				}
+				async.parallel(
+					functionArray,
+					function(err, results) {
+					    if(err){
+					        debug(err);
+					    }else{
+					    	console.log('Sample store details inserted');
+					    	process.exit();
+					    }
+					}
+				)
+
+			});		
+		}
+
+		var insertUserData = function(){
+			
 		}
 
 		configMongodb.configure(function(err, results){
