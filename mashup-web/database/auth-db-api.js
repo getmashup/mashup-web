@@ -72,5 +72,21 @@ define(
 			});
 		}
 
+		exports.insertSampleUsersData = function(data, callback){
+			mongoDBClient.collection("usersInfo").insert(data, function(err, results){
+				var resultData;
+				if(err){
+					resultData = {
+						error: err,
+						message: 'Execute failed in insertSampleUsersData'
+					};
+					callback(resultData);
+				}else{
+					resultData = 'Inserted userDetails';
+					callback(null, resultData);
+				}
+			});
+		}
+
 	}
 );
