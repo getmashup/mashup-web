@@ -18,9 +18,7 @@ define(
             debug('api-handler signup');
 
             var reqObj = req.body;
-                reqObj.userName = req.body.userName.toLowerCase();
-
-            reqObj.displayName = reqObj.displayName;
+                reqObj.username = req.body.username.toLowerCase();
 
             var token = crypto.randomBytes(15).toString('hex');
             reqObj.token = token;
@@ -39,106 +37,108 @@ define(
                     authDbApi.registerNewUser(reqObj, responseCallback);
                 });
             });
-
-            var messageBody = 'Welcome!';
-
-            debug(messageBody);
         }    
 
         function login(req, responseCallback){
             debug('api-handler login');
-            debug(req.body);
             var reqObj = req.body;
 
             async.series(
-                {
-                    one: function (callback) {
-                        authDbApi.checkForUser(reqObj, callback);
+                [
+                    function (callback) {
+                        authDbApi.getUserDetails(reqObj, callback);
                     }
-                },
+                ],
                 function(err, results){
                     if(err){
                         debug(err);
                     }else{
                         var responseData = {};
 
-                        if(results.one.message){
-                            responseData = {
-                                status: 'incorrect username'
-                            };
-                            responseCallback(responseData);                      
-                        
-                        }else{
-                            bcrypt.compare(reqObj.password, results.one.password, function(err, res) {
+                        if(results[0].username){   
+                            bcrypt.compare(reqObj.password, results[0].password, function(err, res) {
                                 if (err){
                                     debug(err);
                                 }else{
                                     if(res){
-                                        var displayPicture = null, coverPicture = null;
-                                        if(results.one.displayPictures){
-                                            displayPicture = results.one.displayPictures[0]
-                                        }
-                                        if(results.one.coverPictures){
-                                            coverPicture = results.one.coverPictures[0]
-                                        }
-
+                                        debug('success');
                                         responseData = {
-                                            userName: reqObj.userName,
-                                            displayName: results.one.displayName,
-                                            userPrivilege: results.one.userPrivilege,
-                                            status: 'loggedIn',
-                                            displayPicture: displayPicture,
-                                            coverPicture: coverPicture
-                                        };
+                                            username: results[0].username,
+                                            displayName: results[0].displayName,
+                                            status: 'loggedIn'
+                                        }
                                     }else{
+                                        debug('failure');
                                         responseData = {
-                                            status: 'unlogged'
-                                        };
+                                            username: null,
+                                            displayName: null,
+                                            status: null
+                                        }
                                     }
 
                                     responseCallback(responseData);
                                 }
                             });
+                        }else{
+                            responseData = {
+                                userId: null,
+                                displayName: null,
+                                status: null
+                            }
+                            responseCallback(responseData);
                         }
                     }
                 }
             );
         }
 
-        function checkUserName(req, responseCallback){
-            debug('api-handler checkUserName');
-            
-            var reqObj = {};
-            reqObj.userName = req.body.userName;
-            
-            authDbApi.checkForUser(reqObj, responseCallback);
+        function checkForUser(req, responseCallback){
+            authDbApi.getUserDetails(req.body, function(err, resultData){
+                var responseData = {};
+                if(err){
+                    debug(err);
+                }else{
+                    if(resultData.phone){
+                        responseData = {
+                            status: 'notavailable'
+                        }
+                    }else{
+                        responseData = {
+                            status: 'available'
+                        }
+                    }
+                }
+                responseCallback(responseData);
+            });
         }
 
-        homeRender = function(req, url, responseCallback){
+        function homeRender(req, responseCallback){
             debug('inside homeRender');
             var argOne = 'index',
                 argTwo = {};
-                
-            if(req.session.user != null){
+            console.log(req.session.user);
+            if(req.session.user){
                 argTwo = {
-                    user_name: req.session.user.userName,
-                };
-
-                responseCallback(argOne, argTwo);                         
+                    username: req.session.user.username,
+                    status: req.session.user.status,
+                    display_name: req.session.user.displayName
+                };                        
             }
             else {
                 argTwo = {
-                    user_name: null
+                    username: null,
+                    status: null,
+                    display_name: null
                 };
-
-                responseCallback(argOne, argTwo);
             }
+
+            responseCallback(argOne, argTwo);
         };
         
         return {
             signup: signup,
             login: login,
-            checkUserName: checkUserName,
+            checkForUser: checkForUser,
             homeRender: homeRender
         }
     }

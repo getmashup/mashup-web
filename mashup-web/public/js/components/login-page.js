@@ -10,10 +10,10 @@ define(
 			},
 			verifyLogin:function(){
 				console.log('Login clicked');
-				var userName = document.getElementById('loginNameInput').value,
+				var username = document.getElementById('loginNameInput').value,
 					password = document.getElementById('loginPwInput').value,
 					postData = {
-						userName: userName,
+						username: username,
 						password: password 
 					};
 				//this code needs to be changed as the authentication technique is not secure.
@@ -36,10 +36,10 @@ define(
 				});
 			},
 			checkForUsername:function(){
-				var userName = document.getElementById('signupNameInput');
-				if(userName.value !== ''){
+				var username = document.getElementById('signupNameInput');
+				if(username.value !== ''){
 					var postData = {
-						userName: userName.value
+						username: username.value
 					};
 					$.ajax({
 					    type: 'POST',
@@ -48,11 +48,11 @@ define(
 					    datatype: 'json',
 					    success: function(data){
 					  		if(data.status === 'unavailable'){
-					  			document.getElementById('signupNameMsg').innerHTML = 'Username not available';
+					  			document.getElementById('signupNameMsg').innerHTML = 'username not available';
 					  			this.signup.usernameStatus = 'false';
 
 					  		}else if(data.status === 'available'){
-					  			document.getElementById('signupNameMsg').innerHTML = 'Username available';
+					  			document.getElementById('signupNameMsg').innerHTML = 'username available';
 					  			this.signup.usernameStatus = 'ok';
 					  		}
 					    }.bind(this),
@@ -65,7 +65,7 @@ define(
 				}
 			},
 			signup:function(){
-				var userName = document.getElementById('signupNameInput').value,
+				var username = document.getElementById('signupNameInput').value,
 					pwOne = document.getElementById('signupPwInputOne').value,
 					pwTwo = document.getElementById('signupPwInputTwo').value,
 					that = this;
@@ -73,7 +73,7 @@ define(
 					document.getElementById('signupPwMsg').innerHTML = 'Passwords do not match';
 				}else if(that.signup.usernameStatus === 'ok' && pwOne !== ''){
 					var postData = {
-						userName: userName,
+						username: username,
 						password: pwOne 
 					};
 					$.ajax({

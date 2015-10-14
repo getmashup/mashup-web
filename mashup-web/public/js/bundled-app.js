@@ -20,9 +20,9 @@ webpackJsonp([1],[
 		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, LoginPage, HomePage){	
 			console.log('Loaded the Home Page');
 			var body = document.body,
-				userName = body.getAttribute('data-user-name');
+				username = body.getAttribute('data-username');
 
-			if(userName === null){
+			if(!username){
 				React.render(React.createElement(LoginPage, null), document.getElementById('componentContainer'));
 			}else{
 				React.render(React.createElement(HomePage, null), document.getElementById('componentContainer'));
@@ -47,10 +47,10 @@ webpackJsonp([1],[
 				},
 				verifyLogin:function(){
 					console.log('Login clicked');
-					var userName = document.getElementById('loginNameInput').value,
+					var username = document.getElementById('loginNameInput').value,
 						password = document.getElementById('loginPwInput').value,
 						postData = {
-							userName: userName,
+							username: username,
 							password: password 
 						};
 					//this code needs to be changed as the authentication technique is not secure.
@@ -73,10 +73,10 @@ webpackJsonp([1],[
 					});
 				},
 				checkForUsername:function(){
-					var userName = document.getElementById('signupNameInput');
-					if(userName.value !== ''){
+					var username = document.getElementById('signupNameInput');
+					if(username.value !== ''){
 						var postData = {
-							userName: userName.value
+							username: username.value
 						};
 						$.ajax({
 						    type: 'POST',
@@ -85,11 +85,11 @@ webpackJsonp([1],[
 						    datatype: 'json',
 						    success: function(data){
 						  		if(data.status === 'unavailable'){
-						  			document.getElementById('signupNameMsg').innerHTML = 'Username not available';
+						  			document.getElementById('signupNameMsg').innerHTML = 'username not available';
 						  			this.signup.usernameStatus = 'false';
 
 						  		}else if(data.status === 'available'){
-						  			document.getElementById('signupNameMsg').innerHTML = 'Username available';
+						  			document.getElementById('signupNameMsg').innerHTML = 'username available';
 						  			this.signup.usernameStatus = 'ok';
 						  		}
 						    }.bind(this),
@@ -102,7 +102,7 @@ webpackJsonp([1],[
 					}
 				},
 				signup:function(){
-					var userName = document.getElementById('signupNameInput').value,
+					var username = document.getElementById('signupNameInput').value,
 						pwOne = document.getElementById('signupPwInputOne').value,
 						pwTwo = document.getElementById('signupPwInputTwo').value,
 						that = this;
@@ -110,7 +110,7 @@ webpackJsonp([1],[
 						document.getElementById('signupPwMsg').innerHTML = 'Passwords do not match';
 					}else if(that.signup.usernameStatus === 'ok' && pwOne !== ''){
 						var postData = {
-							userName: userName,
+							username: username,
 							password: pwOne 
 						};
 						$.ajax({

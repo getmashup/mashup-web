@@ -27,7 +27,7 @@ define(
 				}else{
 					if(results){
 						resultData = {
-							userName: results.userName,
+							username: results.username,
 							phone: results.phone,
 							displayName: results.displayName,
 							email: results.email,
@@ -49,7 +49,7 @@ define(
 
 		exports.registerNewUser = function(reqObj, callback){
 			mongoDBClient.collection("usersInfo").insert({
-				userName: reqObj.userName,
+				username: reqObj.username,
 				displayName: reqObj.displayName,
 				phone: reqObj.phone,
 				email: reqObj.email,
@@ -64,7 +64,7 @@ define(
 					callback(resultData);
 				}else{
 					resultData = {
-						userName: reqObj.userName,
+						username: reqObj.username,
 						displayName: reqObj.displayName	
 					}
 					callback(null, resultData);

@@ -18,6 +18,17 @@ define(
                 });
             });
 
+            app.post('/signup', function(req, res){
+                debug('inside /police/signup');
+                authApiHandlers.signup(req, function(responseData){
+                    req.session.regenerate(function(){
+                        req.session.user = responseData;
+            
+                        res.json(responseData);                          
+                    });
+                });
+            });
+
             app.post('/login', function (req, res){
                 debug('Inside login');
                 authApiHandlers.login(req, function(responseData){                   
@@ -25,26 +36,21 @@ define(
                         debug(responseData);
 
                         req.session.regenerate(function(){
-                            req.session.user = {
-                                userName: responseData.userName,
-                                displayName: responseData.displayName,
-                                displayPicture: responseData.displayPicture,
-                                coverPicture: responseData.coverPicture,
-                                userPrivilege: responseData.userPrivilege,
-                                status: responseData.status
-                            };
+                            req.session.user = responseData;
                         
-                            res.json(responseData);                          
+                            res.json(responseData);                         
                         });
                     }else{
-                        res.json(responseData);
+                        res.json({
+                            status: 'invalid'
+                        })
                     }
                 });
             });
 
             app.get('/', function (req, res) {
                 debug('request to /');
-                authApiHandlers.homeRender(req, 'all', function(argOne, argTwo){
+                authApiHandlers.homeRender(req, function(argOne, argTwo){
                     res.render(argOne, argTwo);
                 });
             });

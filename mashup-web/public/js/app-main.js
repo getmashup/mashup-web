@@ -7,9 +7,9 @@ define(
 	function(React, LoginPage, HomePage){	
 		console.log('Loaded the Home Page');
 		var body = document.body,
-			userName = body.getAttribute('data-user-name');
+			username = body.getAttribute('data-username');
 
-		if(userName === null){
+		if(!username){
 			React.render(<LoginPage />, document.getElementById('componentContainer'));
 		}else{
 			React.render(<HomePage />, document.getElementById('componentContainer'));

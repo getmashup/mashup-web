@@ -11,10 +11,14 @@ requirejs(
 	[
 		'exports',
 		'async',
+		'crypto',
 		'configs/db-configs/config-mongodb',
 	],
-	function(exports, async, configMongodb){
+	function(exports, async, crypto, configMongodb){
 		var that = this;
+
+		var bcrypt = require('bcrypt'),
+		    SALT_WORK_FACTOR = 10;
 
 		var insertStoreData = function(mainCallback){
 
@@ -258,7 +262,7 @@ requirejs(
 
 			var usersInfo = [
 				{
-			       	userId: 'guest01',
+			       	username: 'guest01',
 			       	displayName: 'Guest 01',
 			       	phone: '123',
 			       	email: 'guest01@mashup.com',
@@ -287,7 +291,7 @@ requirejs(
 			       	]   
 			   	},
 			   	{
-			       	userId: 'guest02',
+			       	username: 'guest02',
 			       	displayName: 'Guest 02',
 			       	phone: '456',
 			       	email: 'guest02@mashup.com',
@@ -316,7 +320,7 @@ requirejs(
 			       	]   
 			   	},
 			   	{
-			       	userId: 'guest03',
+			       	username: 'guest03',
 			       	displayName: 'Guest 03',
 			       	phone: '789',
 			       	email: 'guest03@mashup.com',
@@ -345,7 +349,7 @@ requirejs(
 			       	]   
 			   	},
 			   	{
-			       	userId: 'guest04',
+			       	username: 'guest04',
 			       	displayName: 'Guest 04',
 			       	phone: '987',
 			       	email: 'guest04@mashup.com',
@@ -374,7 +378,7 @@ requirejs(
 			       	]   
 			   	},
 			   	{
-			       	userId: 'guest05',
+			       	username: 'guest05',
 			       	displayName: 'Guest 05',
 			       	phone: '654',
 			       	email: 'guest05@mashup.com',
@@ -410,10 +414,27 @@ requirejs(
 				[
 					'database/auth-db-api',
 				],
+				
+
 				function(authDbApi){
 					function makeFunctionList(userDetails){
+						
 					    return function(callback){
-					        authDbApi.insertSampleUsersData(userDetails, callback);
+					    	var token = crypto.randomBytes(15).toString('hex');
+
+					    	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+					    		if (err){
+					    		    console.log(err);
+					    		}
+					    		// hash the password using our new salt
+					    		bcrypt.hash(userDetails.password, salt, function(err, hash) {
+						    		if (err) return next(err);
+						    		
+						    		// override the cleartext password with the hashed one
+						    		userDetails.password = hash;
+						        	authDbApi.insertSampleUsersData(userDetails, callback);
+						        });	
+					    	});
 					    }
 					}
 
