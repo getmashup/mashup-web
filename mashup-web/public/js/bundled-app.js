@@ -198,10 +198,85 @@ webpackJsonp([1],[
 					console.log('triggered once after initial render');
 				},
 			  	render:function(){
+			  		var imageStyle = {
+			  			maxWidth: '60%',
+			  			maxHeight: '100%'
+			  		}
+			  		var containerStyle = {
+			  			position: 'absolute',
+			  			top: '10%',
+			  			width: '100%'
+			  		}
+
+			  		var columnStyle = {
+			  			height: '100vh',
+			  			overflowY: 'scroll'
+			  		}
 				    return (
 				    	React.createElement("div", {id: "homePage"}, 
 				    		React.createElement(HeaderBar, null), 
-				    		"Welcome, ", this.state.userName
+				    		"Welcome, ", this.state.userName, 
+				    		React.createElement("div", {className: "row", style: containerStyle}, 
+				    		    React.createElement("div", {className: "col-sm-6 col-md-5", style: columnStyle}, 
+			    		    		React.createElement("div", {className: "thumbnail"}, 
+			    		    	        React.createElement("div", {className: "caption"}, 
+			    		    	            React.createElement("h3", null, "Paneer tikka masala "), 
+			    		    	            React.createElement("p", null, "Recommended")
+			    		    	        )
+			    		    	    ), 
+				    		    	React.createElement("div", {className: "thumbnail"}, 
+				    		            React.createElement("div", {className: "caption"}, 
+				    		                React.createElement("h3", null, "Paneer tikka masala "), 
+				    		                React.createElement("p", null, "by guest01")
+				    		            )
+				    		        ), 
+			    		        	React.createElement("div", {className: "thumbnail"}, 
+			    		                React.createElement("div", {className: "caption"}, 
+			    		                    React.createElement("h3", null, "Paneer tikka masala "), 
+			    		                    React.createElement("p", null, "by guest02")
+			    		                )
+			    		            ), 
+		    		            	React.createElement("div", {className: "thumbnail"}, 
+		    		                    React.createElement("div", {className: "caption"}, 
+		    		                        React.createElement("h3", null, "Paneer tikka masala "), 
+		    		                        React.createElement("p", null, "by guest03")
+		    		                    )
+		    		                ), 
+	    		                	React.createElement("div", {className: "thumbnail"}, 
+	    		                        React.createElement("div", {className: "caption"}, 
+	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
+	    		                            React.createElement("p", null, "by guest04")
+	    		                        )
+	    		                    ), 
+
+	    		                    React.createElement("div", {className: "thumbnail"}, 
+	    		                        React.createElement("div", {className: "caption"}, 
+	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
+	    		                            React.createElement("p", null, "by guest05")
+	    		                        )
+	    		                    ), 
+	    		                    React.createElement("div", {className: "thumbnail"}, 
+	    		                        React.createElement("div", {className: "caption"}, 
+	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
+	    		                            React.createElement("p", null, "by guest06")
+	    		                        )
+	    		                    )
+				    		    ), 
+				    		    React.createElement("div", {className: "col-sm-6 col-md-7"}, 
+				    		        React.createElement("div", {className: "thumbnail"}, 
+				    		            React.createElement("img", {src: "/images/paneer-tikka-masala.jpg", style: imageStyle}), 
+				    		            React.createElement("div", {className: "caption"}, 
+				    		                React.createElement("h3", null, "Paneer Tikka Masala"), 
+				    		                React.createElement("p", null, "by guest02"), 
+				    		  				React.createElement("div", null, 
+				    		  					React.createElement("p", null, "Step 1. First heat the pan..."), 
+				    		  					React.createElement("p", null, "Step 2. Next, pour the contents..."), 
+				    		  					React.createElement("p", null, "Step 3. Serve hot")
+				    		  				)
+				    		            )
+				    		        )
+				    		    )
+				    		)
 		 		    	)
 				    );
 			  	}
