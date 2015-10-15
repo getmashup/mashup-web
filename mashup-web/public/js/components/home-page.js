@@ -1,9 +1,11 @@
 define(
 	[
 		'react',
-		'./header-bar'
+		'./header-bar',
+		'./mashups-list',
+		'./mashup-receipe'
 	],
-	function(React, HeaderBar){
+	function(React, HeaderBar, MashupsList, MashupReceipe){
 		var HomePage = React.createClass({
 			getInitialState: function(){
 				return {
@@ -13,84 +15,54 @@ define(
 			componentDidMount:function(){
 				console.log('triggered once after initial render');
 			},
+			getSearchItem: function(){
+
+			},
+
 		  	render:function(){
-		  		var imageStyle = {
-		  			maxWidth: '60%',
-		  			maxHeight: '100%'
-		  		}
+		  		
 		  		var containerStyle = {
 		  			position: 'absolute',
 		  			top: '10%',
-		  			width: '100%'
+		  			width: '100%',
+		  			marginLeft: '1%'
 		  		}
 
-		  		var columnStyle = {
-		  			height: '100vh',
-		  			overflowY: 'scroll'
+		  		var mashupDetails = {
+		  			mashupName: 'Paneer Butter Masala',
+		  			mashupImage: '/images/paneer-tikka-masala.jpg',
+		  			createdBy: 'Recommended',
+		  			ratings: 4/5,
+		  			receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+		  			receipeItems: [
+		  			    {
+		  			        item: 'eggs',
+		  			        quantity: '2'
+		  			    },
+		  			    {
+		  			        item: 'garam masala',
+		  			        quantity: '200 grams'
+		  			    },
+		  			    {
+		  			        item: 'tomatoes',
+		  			        quantity: '500 grams'
+		  			    },
+		  			    {
+		  			        item: 'salt',
+		  			        quantity: '500 grams'
+		  			    },
+		  			]
 		  		}
+		  		
 			    return (
 			    	<div id="homePage">
 			    		<HeaderBar />
 			    		Welcome, {this.state.userName}
 			    		<div className="row" style={containerStyle}>
-			    		    <div className="col-sm-6 col-md-5" style={columnStyle}>
-		    		    		<div className="thumbnail">
-		    		    	        <div className="caption">
-		    		    	            <h3>Paneer tikka masala </h3>
-		    		    	            <p>Recommended</p>
-		    		    	        </div>
-		    		    	    </div>
-			    		    	<div className="thumbnail">
-			    		            <div className="caption">
-			    		                <h3>Paneer tikka masala </h3>
-			    		                <p>by guest01</p>
-			    		            </div>
-			    		        </div>   
-		    		        	<div className="thumbnail">
-		    		                <div className="caption">
-		    		                    <h3>Paneer tikka masala </h3>
-		    		                    <p>by guest02</p>
-		    		                </div>
-		    		            </div>
-	    		            	<div className="thumbnail">
-	    		                    <div className="caption">
-	    		                        <h3>Paneer tikka masala </h3>
-	    		                        <p>by guest03</p>
-	    		                    </div>
-	    		                </div>
-    		                	<div className="thumbnail">
-    		                        <div className="caption">
-    		                            <h3>Paneer tikka masala </h3>
-    		                            <p>by guest04</p>
-    		                        </div>
-    		                    </div> 
+			    			<MashupsList />
 
-    		                    <div className="thumbnail">
-    		                        <div className="caption">
-    		                            <h3>Paneer tikka masala </h3>
-    		                            <p>by guest05</p>
-    		                        </div>
-    		                    </div>
-    		                    <div className="thumbnail">
-    		                        <div className="caption">
-    		                            <h3>Paneer tikka masala </h3>
-    		                            <p>by guest06</p>
-    		                        </div>
-    		                    </div>
-			    		    </div>
 			    		    <div className="col-sm-6 col-md-7">
-			    		        <div className="thumbnail">
-			    		            <img src="/images/paneer-tikka-masala.jpg" style={imageStyle} />
-			    		            <div className="caption">
-			    		                <h3>Paneer Tikka Masala</h3>
-			    		                <p>by guest02</p>
-			    		  				<div>
-			    		  					<p>Step 1. First heat the pan...</p>
-			    		  					<p>Step 2. Next, pour the contents...</p>
-			    		  					<p>Step 3. Serve hot</p>
-			    		  				</div>
-			    		            </div>
-			    		        </div>
+			    		        <MashupReceipe mashupDetails={mashupDetails} />
 			    		    </div>
 			    		</div>
 	 		    	</div>

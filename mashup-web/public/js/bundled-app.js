@@ -2,15 +2,12 @@ webpackJsonp([1],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(5);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
 /* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
@@ -34,12 +31,15 @@ webpackJsonp([1],[
 	//webpack -p (for production)
 
 /***/ },
+/* 3 */,
+/* 4 */,
+/* 5 */,
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 			__webpack_require__(1),
-			__webpack_require__(2)
+			__webpack_require__(3)
 		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React,$){
 			var LoginPage = React.createClass({displayName: "LoginPage",
 				signup:{
@@ -186,8 +186,10 @@ webpackJsonp([1],[
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 			__webpack_require__(1),
-			__webpack_require__(8)
-		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, HeaderBar){
+			__webpack_require__(8),
+			__webpack_require__(9),
+			__webpack_require__(10)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, HeaderBar, MashupsList, MashupReceipe){
 			var HomePage = React.createClass({displayName: "HomePage",
 				getInitialState: function(){
 					return {
@@ -197,84 +199,54 @@ webpackJsonp([1],[
 				componentDidMount:function(){
 					console.log('triggered once after initial render');
 				},
+				getSearchItem: function(){
+
+				},
+
 			  	render:function(){
-			  		var imageStyle = {
-			  			maxWidth: '60%',
-			  			maxHeight: '100%'
-			  		}
+			  		
 			  		var containerStyle = {
 			  			position: 'absolute',
 			  			top: '10%',
-			  			width: '100%'
+			  			width: '100%',
+			  			marginLeft: '1%'
 			  		}
 
-			  		var columnStyle = {
-			  			height: '100vh',
-			  			overflowY: 'scroll'
+			  		var mashupDetails = {
+			  			mashupName: 'Paneer Butter Masala',
+			  			mashupImage: '/images/paneer-tikka-masala.jpg',
+			  			createdBy: 'Recommended',
+			  			ratings: 4/5,
+			  			receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+			  			receipeItems: [
+			  			    {
+			  			        item: 'eggs',
+			  			        quantity: '2'
+			  			    },
+			  			    {
+			  			        item: 'garam masala',
+			  			        quantity: '200 grams'
+			  			    },
+			  			    {
+			  			        item: 'tomatoes',
+			  			        quantity: '500 grams'
+			  			    },
+			  			    {
+			  			        item: 'salt',
+			  			        quantity: '500 grams'
+			  			    },
+			  			]
 			  		}
+			  		
 				    return (
 				    	React.createElement("div", {id: "homePage"}, 
 				    		React.createElement(HeaderBar, null), 
 				    		"Welcome, ", this.state.userName, 
 				    		React.createElement("div", {className: "row", style: containerStyle}, 
-				    		    React.createElement("div", {className: "col-sm-6 col-md-5", style: columnStyle}, 
-			    		    		React.createElement("div", {className: "thumbnail"}, 
-			    		    	        React.createElement("div", {className: "caption"}, 
-			    		    	            React.createElement("h3", null, "Paneer tikka masala "), 
-			    		    	            React.createElement("p", null, "Recommended")
-			    		    	        )
-			    		    	    ), 
-				    		    	React.createElement("div", {className: "thumbnail"}, 
-				    		            React.createElement("div", {className: "caption"}, 
-				    		                React.createElement("h3", null, "Paneer tikka masala "), 
-				    		                React.createElement("p", null, "by guest01")
-				    		            )
-				    		        ), 
-			    		        	React.createElement("div", {className: "thumbnail"}, 
-			    		                React.createElement("div", {className: "caption"}, 
-			    		                    React.createElement("h3", null, "Paneer tikka masala "), 
-			    		                    React.createElement("p", null, "by guest02")
-			    		                )
-			    		            ), 
-		    		            	React.createElement("div", {className: "thumbnail"}, 
-		    		                    React.createElement("div", {className: "caption"}, 
-		    		                        React.createElement("h3", null, "Paneer tikka masala "), 
-		    		                        React.createElement("p", null, "by guest03")
-		    		                    )
-		    		                ), 
-	    		                	React.createElement("div", {className: "thumbnail"}, 
-	    		                        React.createElement("div", {className: "caption"}, 
-	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
-	    		                            React.createElement("p", null, "by guest04")
-	    		                        )
-	    		                    ), 
+				    			React.createElement(MashupsList, null), 
 
-	    		                    React.createElement("div", {className: "thumbnail"}, 
-	    		                        React.createElement("div", {className: "caption"}, 
-	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
-	    		                            React.createElement("p", null, "by guest05")
-	    		                        )
-	    		                    ), 
-	    		                    React.createElement("div", {className: "thumbnail"}, 
-	    		                        React.createElement("div", {className: "caption"}, 
-	    		                            React.createElement("h3", null, "Paneer tikka masala "), 
-	    		                            React.createElement("p", null, "by guest06")
-	    		                        )
-	    		                    )
-				    		    ), 
 				    		    React.createElement("div", {className: "col-sm-6 col-md-7"}, 
-				    		        React.createElement("div", {className: "thumbnail"}, 
-				    		            React.createElement("img", {src: "/images/paneer-tikka-masala.jpg", style: imageStyle}), 
-				    		            React.createElement("div", {className: "caption"}, 
-				    		                React.createElement("h3", null, "Paneer Tikka Masala"), 
-				    		                React.createElement("p", null, "by guest02"), 
-				    		  				React.createElement("div", null, 
-				    		  					React.createElement("p", null, "Step 1. First heat the pan..."), 
-				    		  					React.createElement("p", null, "Step 2. Next, pour the contents..."), 
-				    		  					React.createElement("p", null, "Step 3. Serve hot")
-				    		  				)
-				    		            )
-				    		        )
+				    		        React.createElement(MashupReceipe, {mashupDetails: mashupDetails})
 				    		    )
 				    		)
 		 		    	)
@@ -371,6 +343,150 @@ webpackJsonp([1],[
 
 		return HeaderBar;
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(1),
+			__webpack_require__(11)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, MashupItem){
+		
+			var MashupsList = React.createClass({displayName: "MashupsList",
+				getInitialState: function(){
+					return {
+						userName:'ashwin'
+					}			
+				},
+				componentDidMount:function(){
+					console.log('triggered once after initial render');
+				},
+			  	render:function(){
+			  		var columnStyle = {
+			  			height: '100vh',
+			  			overflowY: 'scroll'
+			  		};
+
+			  		var itemList = [
+			  			{
+			  				mashupName: 'Paneer Tikka Masala',
+			  				createdBy: 'Recommended'
+			  			},{
+			  				mashupName: 'Paneer Tikka Masala',
+			  				createdBy: 'guest01'
+			  			},{
+			  				mashupName: 'Paneer Tikka Masala',
+			  				createdBy: 'guest02'
+			  			},{
+			  				mashupName: 'Paneer Tikka Masala',
+			  				createdBy: 'guest03'
+			  			},{
+			  				mashupName: 'Paneer Tikka Masala',
+			  				createdBy: 'guest04'
+			  			}
+			  		]
+			  		var mashupItems = itemList.map(function(mashupDetails){
+			  			return (
+			  				React.createElement(MashupItem, {name: mashupDetails.mashupName, createdBy: mashupDetails.createdBy})
+			  			)	
+			  		});
+
+				    return (
+		    		    React.createElement("div", {className: "col-sm-6 col-md-5", style: columnStyle}, 
+				    		mashupItems
+		    		    )
+				    );
+			  	}
+			});
+
+			return MashupsList;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(1)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React){
+			var MashupReceipe = React.createClass({displayName: "MashupReceipe",
+				getInitialState: function(){
+					return {
+						userName:'ashwin'
+					}			
+				},
+				componentDidMount:function(){
+					console.log('triggered once after initial render');
+				},
+			  	render:function(){
+			  		var columnStyle = {
+			  			height: '100vh',
+			  			overflowY: 'scroll'
+			  		}
+			  		var imageStyle = {
+			  			maxWidth: '60%',
+			  			maxHeight: '100%'
+			  		}
+			  		
+			  		var mashupDetails = this.props.mashupDetails;
+
+				    return (
+		    		    React.createElement("div", {className: "thumbnail"}, 
+		    		        React.createElement("img", {src: mashupDetails.mashupImage, style: imageStyle}), 
+	    		          	React.createElement("div", {className: "caption"}, 
+	    		              	React.createElement("h3", null, mashupDetails.mashupName), 
+	    		              	React.createElement("p", null, mashupDetails.createdBy), 
+	    						React.createElement("div", null, 
+	    							React.createElement("p", null, mashupDetails.receipeDescription)
+	    						)
+	    		         	)
+		    		    )
+				    );
+			  	}
+			});
+
+			return MashupReceipe;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
+			__webpack_require__(1)
+		], __WEBPACK_AMD_DEFINE_RESULT__ = function(React){
+			var MashupItem = React.createClass({displayName: "MashupItem",
+				getInitialState: function(){
+					return {
+						userName:'ashwin'
+					}			
+				},
+				componentDidMount:function(){
+					console.log('triggered once after initial render');
+				},
+			  	render:function(){
+			  		var columnStyle = {
+			  			height: '100vh',
+			  			overflowY: 'scroll'
+			  		}
+
+				    return (
+			    		React.createElement("div", {className: "thumbnail"}, 
+			    	        React.createElement("div", {className: "caption"}, 
+			    	            React.createElement("h3", null, this.props.name, " "), 
+			    	            React.createElement("p", null, this.props.createdBy)
+			    	        )
+			    	    )
+				    );
+			  	}
+			});
+
+			return MashupItem;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ }
