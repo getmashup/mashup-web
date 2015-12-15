@@ -11,25 +11,23 @@ define(
 			that = this,
 			debug = require('debug')('mashup:auth-db-api');
 
-		exports.insertSampleStoresData = function(storeDetails, callback){
-			mongoDBClient.collection("storesInfo").ensureIndex( { "location" : "2dsphere" }, function(){
+		exports.insertSampleMashupsData = function(mashupDetails, callback){
 
-				mongoDBClient.collection("storesInfo").ensureIndex( { "storeItems.item" : "text" }, function(){
+			mongoDBClient.collection("mashupsInfo").ensureIndex( { "mashupName" : "text" }, function(){
 
-					mongoDBClient.collection("storesInfo").insert(storeDetails, function(err, results){
-						if(err){
-							resultData = {
-								error: err,
-								message: 'Execute failed in insert'
-							};
-							callback(resultData);
-						}else{
-							resultData = 'Inserted storeDetails'+ iterator;
-							callback(null, resultData);
-						}
-					});
-				})
-			})
+				mongoDBClient.collection("mashupsInfo").insert(mashupDetails, function(err, results){
+					if(err){
+						resultData = {
+							error: err,
+							message: 'Execute failed in insert'
+						};
+						callback(resultData);
+					}else{
+						resultData = 'Inserted mashupDetails'+ iterator;
+						callback(null, resultData);
+					}
+				});
+			});
 		} 
 
 	}

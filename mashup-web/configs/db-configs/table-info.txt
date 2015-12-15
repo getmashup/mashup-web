@@ -125,6 +125,7 @@ Queries:-
     Creates index for searching text:
 
 db.storesInfo.createIndex({"storeItems.item": "text"})
+db.storesInfo.createIndex({"storeItems.item": "text"})
 
     Creates index for geoSpatial querying:
 

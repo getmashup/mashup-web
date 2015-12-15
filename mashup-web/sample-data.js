@@ -453,7 +453,212 @@ requirejs(
 					)
 				}
 			);
+		}
 
+		var insertMashupsData = function(mainCallback){
+			var mashupsInfo = [
+				{
+				    mashupName: 'Fried Masala Omlette',
+				    createdBy: 'Recommended',
+				    ratings: '4/5',
+				    receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+				    receipeItems: [
+				        {
+				            item: 'eggs',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'salt',
+				            quantity: '500 grams'
+				        },
+				    ]
+				},
+				{
+				    mashupName: 'Paneer Butter Masala',
+				    createdBy: 'Recommended',
+				    ratings: '4/5',
+				    receipeDescription: 'First chop tomatoes. Then ... ',
+				    receipeItems: [
+				        {
+				            item: 'paneer',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'butter',
+				            quantity: '50 grams'
+				        },
+
+				    ]
+				},
+				{
+				    mashupName: 'Fried Masala Omlette',
+				    createdBy: 'guest01',
+				    ratings: '4/5',
+				    receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+				    receipeItems: [
+				        {
+				            item: 'eggs',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'salt',
+				            quantity: '500 grams'
+				        },
+				    ]
+				},
+				{
+				    mashupName: 'Fried Masala Omlette',
+				    createdBy: 'guest02',
+				    ratings: '4/5',
+				    receipeDescription: 'First pour 2 eggs on to a frying pan. Then .... ',
+				    receipeItems: [
+				        {
+				            item: 'eggs',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'salt',
+				            quantity: '500 grams'
+				        },
+				    ]
+				},
+				{
+				    mashupName: 'Paneer Butter Masala',
+				    createdBy: 'guest03',
+				    ratings: '4/5',
+				    receipeDescription: 'First chop tomatoes. Then ... ',
+				    receipeItems: [
+				        {
+				            item: 'paneer',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'butter',
+				            quantity: '50 grams'
+				        },
+
+				    ]
+				},
+				{
+				    mashupName: 'Paneer Butter Masala',
+				    createdBy: 'guest04',
+				    ratings: '4/5',
+				    receipeDescription: 'First chop tomatoes. Then ... ',
+				    receipeItems: [
+				        {
+				            item: 'paneer',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'butter',
+				            quantity: '50 grams'
+				        },
+
+				    ]
+				},
+				{
+				    mashupName: 'Paneer Butter Masala',
+				    createdBy: 'guest05',
+				    ratings: '4/5',
+				    receipeDescription: 'First chop tomatoes. Then ... ',
+				    receipeItems: [
+				        {
+				            item: 'paneer',
+				            quantity: '2'
+				        },
+				        {
+				            item: 'garam masala',
+				            quantity: '200 grams'
+				        },
+				        {
+				            item: 'tomatoes',
+				            quantity: '500 grams'
+				        },
+				        {
+				            item: 'butter',
+				            quantity: '50 grams'
+				        },
+
+				    ]
+				}
+			];
+
+			var functionArray = [];
+
+			requirejs(
+				[
+					'database/mashups-db-api',
+				],
+				function(storesDbApi){
+					function makeFunctionList(mashupDetails){
+					    return function(callback){
+					        storesDbApi.insertSampleMashupsData(mashupDetails, callback);
+					    }
+					}
+
+					for(var i=0; i<mashupsInfo.length; i++){
+						functionArray.push(makeFunctionList(mashupsInfo[i]));
+					}
+					async.parallel(
+						functionArray,
+						function(err, results) {
+						    if(err){
+						        mainCallback(err);
+						    }else{
+						    	mainCallback(null, 'Sample mashup details inserted');
+						    }
+						}
+					)
+				}
+			);
 		}
 
 		configMongodb.configure(function(err, results){
@@ -468,9 +673,9 @@ requirejs(
 						two: function(callback){
 							insertUserData(callback);
 						},
-						// three: function(callback){
-
-						// }
+						three: function(callback){
+							insertMashupsData(callback);
+						}
 					}, function(err, results){
 						if(err){
 						    console.log(err);
